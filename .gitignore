@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Project
+.qmake.stash
+out
+generated
+Makefile
