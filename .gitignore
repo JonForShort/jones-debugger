@@ -36,3 +36,6 @@
 out
 generated
 Makefile
+/build
+*.user
+compile_commands.json
