@@ -50,7 +50,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEdit">
+       <widget class="Ui::CommandPrompt" name="commandPrompt">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -157,6 +157,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Ui::CommandPrompt</class>
+   <extends>QTextEdit</extends>
+   <header location="global">command_prompt.hh</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

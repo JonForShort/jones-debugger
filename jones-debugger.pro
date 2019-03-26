@@ -20,28 +20,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
-        source/main.cpp \
-        source/main_window.cpp
+        source/main.cc \
+        source/main_window.cc \
+        source/command_prompt.cc
 
 HEADERS += \
-        source/include/main_window.hh
+        source/include/main_window.hh \
+        source/include/command_prompt.hh
 
 FORMS += \
         qt/forms/mainwindow.ui
 
-
-CONFIG(debug, debug|release) {
-    DESTDIR = build/debug
-}
-
-CONFIG(release, debug|release) {
-    DESTDIR = build/release
-}
-
-OBJECTS_DIR = $$DESTDIR/.obj
-MOC_DIR = $$DESTDIR/.moc
-RCC_DIR = $$DESTDIR/.qrc
-UI_DIR = $$DESTDIR/.u
+INCLUDEPATH += \
+        $$PWD/source/include
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

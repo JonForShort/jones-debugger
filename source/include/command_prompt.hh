@@ -21,14 +21,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#include "include/main_window.hh"
-#include "ui_mainwindow.h"
+#ifndef JONES_DEBUGGER_COMMAND_PROMPT_HH
+#define JONES_DEBUGGER_COMMAND_PROMPT_HH
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-  ui->setupUi(this);
-}
+#include <QCompleter>
+#include <QKeyEvent>
+#include <QTextEdit>
 
-MainWindow::~MainWindow() { delete ui; }
+namespace Ui {
 
-void MainWindow::on_actionExit_triggered() { QApplication::quit(); }
+class CommandPrompt : public QTextEdit {
+  Q_OBJECT
+
+public:
+  CommandPrompt(QWidget *parent = 0);
+  ~CommandPrompt();
+
+  void setCompleter(QCompleter *c);
+  QCompleter *completer() const;
+
+protected:
+  void keyPressEvent(QKeyEvent *e) override;
+  void focusInEvent(QFocusEvent *e) override;
+
+private slots:
+  void insertCompletion(const QString &completion);
+
+private:
+  QString textUnderCursor() const;
+
+private:
+  QCompleter *c;
+};
+
+} // namespace Ui
+
+#endif // JONES_DEBUGGER_COMMAND_PROMPT_HH
