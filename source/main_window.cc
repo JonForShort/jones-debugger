@@ -21,6 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+#include <QFileDialog>>
+
 #include "main_window.hh"
 #include "ui_mainwindow.h"
 
@@ -32,3 +34,14 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::on_actionExit_triggered() { QApplication::quit(); }
+
+void MainWindow::on_actionOpen_File_or_Project_triggered() {
+  QFileDialog dialog(this);
+  dialog.setFileMode(QFileDialog::ExistingFile);
+  dialog.setNameFilter(tr("NES roms (*.nes *.rom *.bin)"));
+  dialog.setViewMode(QFileDialog::Detail);
+  QStringList fileNames;
+  if (dialog.exec()) {
+    fileNames = dialog.selectedFiles();
+  }
+}

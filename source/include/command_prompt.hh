@@ -26,7 +26,9 @@
 
 #include <QCompleter>
 #include <QKeyEvent>
+#include <QStringListModel>
 #include <QTextEdit>
+#include <memory>
 
 namespace Ui {
 
@@ -34,15 +36,15 @@ class CommandPrompt : public QTextEdit {
   Q_OBJECT
 
 public:
-  CommandPrompt(QWidget *parent = 0);
-  ~CommandPrompt();
+  CommandPrompt(QWidget *parent = nullptr);
+  ~CommandPrompt() override;
 
-  void setCompleter(QCompleter *c);
+  void setCompleter(std::unique_ptr<QCompleter> completer);
   QCompleter *completer() const;
 
 protected:
-  void keyPressEvent(QKeyEvent *e) override;
-  void focusInEvent(QFocusEvent *e) override;
+  void keyPressEvent(QKeyEvent *event) override;
+  void focusInEvent(QFocusEvent *event) override;
 
 private slots:
   void insertCompletion(const QString &completion);
@@ -51,7 +53,8 @@ private:
   QString textUnderCursor() const;
 
 private:
-  QCompleter *c;
+  QStringListModel completerModel_;
+  std::unique_ptr<QCompleter> completer_;
 };
 
 } // namespace Ui
