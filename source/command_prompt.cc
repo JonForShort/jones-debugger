@@ -79,6 +79,18 @@ void CommandPrompt::focusInEvent(QFocusEvent *e) {
 }
 
 void CommandPrompt::keyPressEvent(QKeyEvent *event) {
+  switch (event->key()) {
+  case Qt::Key_Enter:
+  case Qt::Key_Return:
+    processCommand(event);
+    break;
+  default:
+    processAutoComplete(event);
+    break;
+  }
+}
+
+void CommandPrompt::processAutoComplete(QKeyEvent *event) {
   if (completer_ && completer_->popup()->isVisible()) {
     switch (event->key()) {
     case Qt::Key_Enter:
@@ -111,11 +123,17 @@ void CommandPrompt::keyPressEvent(QKeyEvent *event) {
   }
   if (completionPrefix != completer_->completionPrefix()) {
     completer_->setCompletionPrefix(completionPrefix);
-    completer_->popup()->setCurrentIndex(
-        completer_->completionModel()->index(0, 0));
+    const auto currentIndex = completer_->completionModel()->index(0, 0);
+    completer_->popup()->setCurrentIndex(currentIndex);
   }
-  QRect cr = cursorRect();
+  auto cr = cursorRect();
   cr.setWidth(completer_->popup()->sizeHintForColumn(0) +
               completer_->popup()->verticalScrollBar()->sizeHint().width());
   completer_->complete(cr);
+}
+
+void CommandPrompt::processCommand(QKeyEvent *event) {
+  event->ignore();
+  const auto command = QTextEdit::toPlainText();
+  QTextEdit::clear();
 }

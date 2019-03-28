@@ -50,6 +50,8 @@ private slots:
   void insertCompletion(const QString &completion);
 
 private:
+  void processAutoComplete(QKeyEvent *event);
+  void processCommand(QKeyEvent *event);
   QString textUnderCursor() const;
 
 private:
