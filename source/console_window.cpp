@@ -21,39 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#include <QFileDialog>>
+#include "console_window.h"
 
-#include "main_window.hh"
-#include "ui_mainwindow.h"
+using namespace Ui;
 
-namespace {
+ConsoleWindow::ConsoleWindow(QWidget *parent) : QMainWindow(parent) {}
 
-QString getVersionString() { return "Jones Debugger 1.0.0"; }
-
-QString getInitialLoadText() {
-  return getVersionString() + "\n\n" +
-         "Type \"help\" for help on how to use the jones debugger" + "\n";
-}
-
-} // namespace
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-  ui->setupUi(this);
-  ui->textBrowser->append(getInitialLoadText());
-}
-
-MainWindow::~MainWindow() { delete ui; }
-
-void MainWindow::on_actionExit_triggered() { QApplication::quit(); }
-
-void MainWindow::on_actionOpen_File_or_Project_triggered() {
-  QFileDialog dialog(this);
-  dialog.setFileMode(QFileDialog::ExistingFile);
-  dialog.setNameFilter(tr("NES roms (*.nes *.rom *.bin)"));
-  dialog.setViewMode(QFileDialog::Detail);
-  QStringList fileNames;
-  if (dialog.exec()) {
-    fileNames = dialog.selectedFiles();
-  }
-}
+ConsoleWindow::~ConsoleWindow() {}

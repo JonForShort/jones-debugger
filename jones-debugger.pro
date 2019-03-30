@@ -22,11 +22,13 @@ CONFIG += c++17
 SOURCES += \
         source/main.cc \
         source/main_window.cc \
-        source/command_prompt.cc
+        source/command_prompt.cc \
+        source/console_window.cpp
 
 HEADERS += \
         source/include/main_window.hh \
-        source/include/command_prompt.hh
+        source/include/command_prompt.hh \
+        source/include/console_window.h
 
 FORMS += \
         qt/forms/mainwindow.ui

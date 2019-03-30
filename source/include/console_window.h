@@ -21,39 +21,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#include <QFileDialog>>
+#ifndef JONES_DEBUGGER_CONSOLE_WINDOW_HH
+#define JONES_DEBUGGER_CONSOLE_WINDOW_HH
 
-#include "main_window.hh"
-#include "ui_mainwindow.h"
+#include <QMainWindow>
 
-namespace {
+namespace Ui {
 
-QString getVersionString() { return "Jones Debugger 1.0.0"; }
+class ConsoleWindow : public QMainWindow {
+  Q_OBJECT
 
-QString getInitialLoadText() {
-  return getVersionString() + "\n\n" +
-         "Type \"help\" for help on how to use the jones debugger" + "\n";
-}
+public:
+  explicit ConsoleWindow(QWidget *parent = nullptr);
+  ~ConsoleWindow();
 
-} // namespace
+private:
+  Ui::ConsoleWindow *ui;
+};
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-  ui->setupUi(this);
-  ui->textBrowser->append(getInitialLoadText());
-}
+} // namespace Ui
 
-MainWindow::~MainWindow() { delete ui; }
-
-void MainWindow::on_actionExit_triggered() { QApplication::quit(); }
-
-void MainWindow::on_actionOpen_File_or_Project_triggered() {
-  QFileDialog dialog(this);
-  dialog.setFileMode(QFileDialog::ExistingFile);
-  dialog.setNameFilter(tr("NES roms (*.nes *.rom *.bin)"));
-  dialog.setViewMode(QFileDialog::Detail);
-  QStringList fileNames;
-  if (dialog.exec()) {
-    fileNames = dialog.selectedFiles();
-  }
-}
+#endif // JONES_DEBUGGER_CONSOLE_WINDOW_HH
